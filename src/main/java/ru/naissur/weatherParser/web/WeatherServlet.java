@@ -24,8 +24,7 @@ public class WeatherServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Elements dates = weatherService.getWeatherInfo().select("strong[class=forecast-detailed__day-number]");
-        req.setAttribute("dates", weatherService.getStringDates(dates));
+        req.setAttribute("weatherBeans", weatherService.getWeatherBeans());
         // форвардим информацию JSP-странице для отображения
         req.getRequestDispatcher("/weather.jsp").forward(req, resp);
     }

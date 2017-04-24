@@ -6,9 +6,16 @@
         <h2>Forecast</h2>
 
         <table border="1">
-            <tr>
-                <c:forEach items="${dates}" var="date">
-                    <td>${date}</td>
+                <c:forEach items="${weatherBeans}" var="bean">
+                    <tr>
+                        <td rowspan="5">${bean.date}</td>
+                    </tr>
+                    <c:forEach items="${bean.dayparts}" var="beanDaypart">
+                        <tr>
+                            <td>${beanDaypart.name}</td>
+                            <td>${beanDaypart.temperature}</td>
+                        </tr>
+                    </c:forEach>
                 </c:forEach>
             </tr>
         </table>

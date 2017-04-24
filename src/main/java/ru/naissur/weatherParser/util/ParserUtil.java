@@ -14,6 +14,10 @@ import java.util.List;
  * 24.04.2017
  */
 public class ParserUtil {
+    public static Elements getWeaterTables(Document document) {
+        return document.select("tbody[class=weather-table__body]");
+    }
+
     /**
      * Возвращаем список дат в формате "1 января"
      * @param dateElements Массив объектов Elements, из которого необходимо достать даты
