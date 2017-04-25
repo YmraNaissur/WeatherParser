@@ -11,14 +11,16 @@ public class Daypart {
     private String temperature; // температура
     private String event; // погодное явление
     private String pressure; // давление
+    private String humidity; // влажность
+    private String wind; // ветер
 
-    public Daypart(String name, String temperature, String event, String pressure) {
-        // TODO пока что каждая часть дня содержит только название, температуру, погодные явления и давление
-        // TODO нужно докрутить влажность и ветер
+    public Daypart(String name, String temperature, String event, String pressure, String humidity, String wind) {
         this.name = name;
         this.temperature = temperature;
         this.event = event;
         this.pressure = pressure;
+        this.humidity = humidity;
+        this.wind = wind;
     }
 
     public String getName() {
@@ -37,8 +39,16 @@ public class Daypart {
         return pressure;
     }
 
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public String getWind() {
+        return wind;
+    }
+
     @Override
     public String toString() {
-        return name + ": " + temperature + "; " + event + "; " + pressure;
+        return name + ": " + temperature + "; " + event + "; " + pressure + "; " + humidity;
     }
 }

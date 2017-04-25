@@ -37,9 +37,13 @@ public class WeatherServiceImpl implements WeatherService {
                 String[] temps = weatherTable.select("div[class=weather-table__temp]").text().split(" [+−]?\\d\\s?");
                 Elements events = weatherTable.select("td[class=weather-table__body-cell weather-table__body-cell_type_condition]");
                 Elements pressures = weatherTable.select("td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]");
+                Elements humidities = weatherTable.select("td[class=weather-table__body-cell weather-table__body-cell_type_humidity]");
+                Elements windsDirections = weatherTable.select("abbr[class=icon-abbr]");
+                Elements windSpeeds = weatherTable.select("span[class=wind-speed]");
                 Daypart[] beanDayparts = new Daypart[4];
                 for (int j = 0; j < 4; j++) {
-                    beanDayparts[j] = new Daypart(names[j], temps[j], events.remove(0).text(), pressures.remove(0).text());
+                    beanDayparts[j] = new Daypart(names[j], temps[j], events.remove(0).text(),
+                            pressures.remove(0).text(), humidities.remove(0).text(), windsDirections.remove(0).text() + " " + windSpeeds.remove(0).text());
                 }
 
                 weatherBeans.add(new WeatherBean(dates.get(i), beanDayparts));
