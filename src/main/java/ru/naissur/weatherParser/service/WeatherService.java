@@ -23,4 +23,7 @@ public interface WeatherService {
 
     // возвращаем 4 погодных явления, соответствующие 4 частям одного дня
     List<String> getStringEvents(Element weatherTable);
+
+    // возвращаем 4 значения давления, соответствующие 4 частям одного дня
+    List<String> getStringPressures(Element weatherTable);
 }

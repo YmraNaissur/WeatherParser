@@ -15,6 +15,7 @@ import java.util.List;
  */
 public class ParserUtil {
     private static final String EVENTS_SELECTOR = "td[class=weather-table__body-cell weather-table__body-cell_type_condition]";
+    private static final String PRESSURES_SELECTOR = "td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]";
 
     public static Elements getWeaterTables(Document document) {
         return document.select("tbody[class=weather-table__body]");
@@ -34,6 +35,22 @@ public class ParserUtil {
         }
 
         return events;
+    }
+
+    /**
+     * Возвращаем список значений давления одного дня
+     * @param weatherTable объект Element, представляющий таблицу погоды одного дня (в ней описаны 4 части дня)
+     * @return список значений давления в формате String (4 значения, соответствующих 4 частям дня)
+     */
+    public static List<String> getStringPressures(Element weatherTable) {
+        List<String> pressures = new ArrayList<>();
+
+        Elements eventElements = weatherTable.select(PRESSURES_SELECTOR);
+        for (Element eventElement : eventElements) {
+            pressures.add(eventElement.text());
+        }
+
+        return pressures;
     }
 
     /**
