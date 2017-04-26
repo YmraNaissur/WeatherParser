@@ -5,6 +5,9 @@ import java.util.Arrays;
 /**
  * naissur
  * 24.04.2017
+ * Класс отображает погоду одного дня, соответствующего полю date
+ * Каждый день состоит из 4 частей: утро, день, вечер и ночь.
+ * Эти 4 части дня содержатся в массиве объектов Daypart.
  */
 public class WeatherBean {
     private String date;
