@@ -21,9 +21,6 @@ public interface WeatherService {
      */
     List<WeatherBean> getWeatherBeans();
 
-    // возвращаем 4 погодных явления, соответствующие 4 частям одного дня
-    List<String> getStringEvents(Element weatherTable);
-
-    // возвращаем 4 значения давления, соответствующие 4 частям одного дня
-    List<String> getStringPressures(Element weatherTable);
+    // возвращаем 4 значения погодных условий, соответствующие 4 частям одного дня, по селектору
+    List<String> getData(Element weatherTable, String selector);
 }

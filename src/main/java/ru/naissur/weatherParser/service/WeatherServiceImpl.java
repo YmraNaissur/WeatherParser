@@ -19,12 +19,8 @@ public class WeatherServiceImpl implements WeatherService {
         return ParserUtil.getStringDates(dateElements);
     }
 
-    public List<String> getStringEvents(Element weatherTable) {
-        return ParserUtil.getStringEvents(weatherTable);
-    }
-
-    public List<String> getStringPressures(Element weatherTable) {
-        return ParserUtil.getStringPressures(weatherTable);
+    public List<String> getData(Element weatherTable, String selector) {
+        return ParserUtil.getData(weatherTable, selector);
     }
 
     @Override
@@ -45,16 +41,16 @@ public class WeatherServiceImpl implements WeatherService {
             String[] names = weatherTable.select("div[class=weather-table__daypart").text().split(" ");
             String[] temps = weatherTable.select("div[class=weather-table__temp]").text().split(" [+−]?\\d\\s?");
 
-            List<String> events = getStringEvents(weatherTable); // погодные явления дня
-            List<String> pressures = getStringPressures(weatherTable); // значения давлений дня
+            List<String> events = getData(weatherTable, ParserUtil.EVENTS); // погодные явления дня
+            List<String> pressures = getData(weatherTable, ParserUtil.PRESSURES); // значения давлений дня
+            List<String> humidities = getData(weatherTable, ParserUtil.HUMIDITIES); // значения влажности
 
-            Elements humidities = weatherTable.select("td[class=weather-table__body-cell weather-table__body-cell_type_humidity]");
             Elements windsDirections = weatherTable.select("abbr[class=icon-abbr]");
             Elements windSpeeds = weatherTable.select("span[class=wind-speed]");
             Daypart[] beanDayparts = new Daypart[4];
             for (int j = 0; j < 4; j++) {
-                beanDayparts[j] = new Daypart(names[j], temps[j], events.get(j), pressures.get(j),
-                        humidities.remove(0).text(), windsDirections.remove(0).text() + " " + windSpeeds.remove(0).text());
+                beanDayparts[j] = new Daypart(names[j], temps[j], events.get(j), pressures.get(j), humidities.get(j),
+                        windsDirections.remove(0).text() + " " + windSpeeds.remove(0).text());
             }
 
             weatherBeans.add(new WeatherBean(dates.get(i), beanDayparts));

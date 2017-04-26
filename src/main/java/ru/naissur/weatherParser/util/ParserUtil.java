@@ -14,43 +14,29 @@ import java.util.List;
  * 24.04.2017
  */
 public class ParserUtil {
-    private static final String EVENTS_SELECTOR = "td[class=weather-table__body-cell weather-table__body-cell_type_condition]";
-    private static final String PRESSURES_SELECTOR = "td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]";
+    public static final String EVENTS = "td[class=weather-table__body-cell weather-table__body-cell_type_condition]";
+    public static final String PRESSURES = "td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]";
+    public static final String HUMIDITIES = "td[class=weather-table__body-cell weather-table__body-cell_type_humidity]";
 
     public static Elements getWeaterTables(Document document) {
         return document.select("tbody[class=weather-table__body]");
     }
 
     /**
-     * Возвращаем список погодных явлений одного дня
-     * @param weatherTable объект Element, представляющий таблицу погоды одного дня (в ней описаны 4 части дня)
-     * @return список погодных явлений в формате String (4 погодных явления, соответствующих 4 частям дня)
+     * Возвращаем список значений погодных условий одного дня по селектору
+     * @param weatherTable объект Element, содержащий данные по всем погодным условиям одного дня
+     * @param selector строка, обозначающая, что из погодных условий мы хотим извлечь (events, pressures, humidity...)
+     * @return список значений погодных условий, соответствующих 4 частям дня
      */
-    public static List<String> getStringEvents(Element weatherTable) {
-        List<String> events = new ArrayList<>();
+    public static List<String> getData(Element weatherTable, String selector) {
+        List<String> stringData = new ArrayList<>();
 
-        Elements eventElements = weatherTable.select(EVENTS_SELECTOR);
-        for (Element eventElement : eventElements) {
-            events.add(eventElement.text());
+        Elements dataElements = weatherTable.select(selector);
+        for (Element dataElement : dataElements) {
+            stringData.add(dataElement.text());
         }
 
-        return events;
-    }
-
-    /**
-     * Возвращаем список значений давления одного дня
-     * @param weatherTable объект Element, представляющий таблицу погоды одного дня (в ней описаны 4 части дня)
-     * @return список значений давления в формате String (4 значения, соответствующих 4 частям дня)
-     */
-    public static List<String> getStringPressures(Element weatherTable) {
-        List<String> pressures = new ArrayList<>();
-
-        Elements eventElements = weatherTable.select(PRESSURES_SELECTOR);
-        for (Element eventElement : eventElements) {
-            pressures.add(eventElement.text());
-        }
-
-        return pressures;
+        return stringData;
     }
 
     /**
