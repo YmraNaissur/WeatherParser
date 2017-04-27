@@ -8,27 +8,29 @@ package ru.naissur.weatherParser.domain;
  */
 public class Daypart {
     private String name; // утро, день, вечер, ночь
-    private String temperature; // температура
+    private String realTemperature; // реальная температура
     private String event; // погодное явление
     private String pressure; // давление
     private String humidity; // влажность
     private String wind; // ветер
+    private String feelTemperature; // ощущаемая температура
 
-    public Daypart(String name, String temperature, String event, String pressure, String humidity, String wind) {
+    public Daypart(String name, String temperature, String event, String pressure, String humidity, String wind, String feelTemperature) {
         this.name = name;
-        this.temperature = temperature;
+        this.realTemperature = temperature;
         this.event = event;
         this.pressure = pressure;
         this.humidity = humidity;
         this.wind = wind;
+        this.feelTemperature = feelTemperature;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getTemperature() {
-        return temperature;
+    public String getRealTemperature() {
+        return realTemperature;
     }
 
     public String getEvent() {
@@ -47,8 +49,12 @@ public class Daypart {
         return wind;
     }
 
+    public String getFeelTemperature() {
+        return feelTemperature;
+    }
+
     @Override
     public String toString() {
-        return name + ": " + temperature + "; " + event + "; " + pressure + "; " + humidity;
+        return name + ": " + realTemperature + "; " + event + "; " + pressure + "; " + humidity;
     }
 }
