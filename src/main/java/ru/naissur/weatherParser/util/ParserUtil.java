@@ -8,12 +8,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * naissur
  * 24.04.2017
  */
 public class ParserUtil {
+    // приватные константы не используются за пределами ParserUtil
+    private static final String DATES = "strong[class=forecast-detailed__day-number]";
+    private static final String TEMPS = "div[class=weather-table__temp]";
+
+    public static final String DAYPART_NAMES = "div[class=weather-table__daypart]";
     public static final String EVENTS = "td[class=weather-table__body-cell weather-table__body-cell_type_condition]";
     public static final String PRESSURES = "td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]";
     public static final String HUMIDITIES = "td[class=weather-table__body-cell weather-table__body-cell_type_humidity]";
@@ -41,12 +47,13 @@ public class ParserUtil {
 
     /**
      * Возвращаем список дат в формате "1 января"
-     * @param dateElements массив объектов Element, из которого необходимо достать даты
+     * @param document разобранный html, из которого необходимо достать даты
      * @return список с датами в нужном формате
      */
-    public static List<String> getStringDates (Elements dateElements) {
+    public static List<String> getStringDates (Document document) {
         List<String> dates = new ArrayList<>();
 
+        Elements dateElements = document.select(DATES);
         for (Element dateElement : dateElements) {
             String date = dateElement.select("strong[class=forecast-detailed__day-number]").first().text();
 
@@ -77,5 +84,33 @@ public class ParserUtil {
         }
 
         return null;
+    }
+
+    /**
+     * Получить список реальных температур
+     * @param weatherTable таблица погоды дня
+     * @return список реальных температур
+     */
+    public static List<String> getRealTemps(Element weatherTable) {
+        List<String> temps = getData(weatherTable, TEMPS); // список всех температур
+        // в списке temps реальные температуры находятся на четных индексах
+        return temps
+                .stream()
+                .filter(t -> temps.indexOf(t) % 2 == 0)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Получить список температур, как они ощущаются с учетом погодных условий
+     * @param weatherTable таблица погоды дня
+     * @return список ощущаемых температур
+     */
+    public static List<String> getFeelTemps(Element weatherTable) {
+        List<String> temps = getData(weatherTable, TEMPS); // список всех температур
+        // в списке temps ощущаемые температуры находятся на нечетных индексах
+        return temps
+                .stream()
+                .filter(t -> temps.indexOf(t) % 2 != 0)
+                .collect(Collectors.toList());
     }
 }

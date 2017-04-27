@@ -12,7 +12,7 @@ import java.util.List;
  * 24.04.2017
  */
 public interface WeatherService {
-    List<String> getStringDates(Elements dateElements);
+    List<String> getStringDates(Document document);
     Document getWeatherInfo();
 
     /**
@@ -23,4 +23,10 @@ public interface WeatherService {
 
     // возвращаем 4 значения погодных условий, соответствующие 4 частям одного дня, по селектору
     List<String> getData(Element weatherTable, String selector);
+
+    // возвращаем список реальных температур
+    List<String> getRealTemps(Element weatherTable);
+
+    // возвращаем список ощущаемых температур
+    List<String> getFeelTemps(Element weatherTable);
 }
