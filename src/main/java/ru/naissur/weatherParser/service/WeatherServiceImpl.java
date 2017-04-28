@@ -63,19 +63,19 @@ public class WeatherServiceImpl implements WeatherService {
             List<String> events = getData(weatherTable, ParserUtil.EVENTS); // погодные явления дня
             List<String> pressures = getData(weatherTable, ParserUtil.PRESSURES); // значения давлений дня
             List<String> humidities = getData(weatherTable, ParserUtil.HUMIDITIES); // значения влажности
+            List<String> windDirections = getData(weatherTable, ParserUtil.WIND_DIRECTIONS); // направления ветра
+            List<String> windSpeeds = getData(weatherTable, ParserUtil.WIND_SPEEDS); // скорости ветра
 
-            Elements windsDirections = weatherTable.select("abbr[class=icon-abbr]");
-            Elements windSpeeds = weatherTable.select("span[class=wind-speed]");
             Daypart[] beanDayparts = new Daypart[4];
             for (int j = 0; j < 4; j++) {
                 beanDayparts[j] = new Daypart(names.get(j), realTemps.get(j), events.get(j), pressures.get(j), humidities.get(j),
-                        windsDirections.remove(0).text() + " " + windSpeeds.remove(0).text(), feelTemps.get(j));
+                        windDirections.get(j) + " " + windSpeeds.get(j), feelTemps.get(j));
             }
 
+            // формируем объект WeatherBean и заносим его в список
             weatherBeans.add(new WeatherBean(dates.get(i), beanDayparts));
         }
 
-        System.out.println(weatherBeans);
         return weatherBeans;
     }
 }
