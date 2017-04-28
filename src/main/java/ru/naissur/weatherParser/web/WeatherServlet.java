@@ -1,6 +1,5 @@
 package ru.naissur.weatherParser.web;
 
-import org.jsoup.select.Elements;
 import ru.naissur.weatherParser.service.WeatherService;
 import ru.naissur.weatherParser.service.WeatherServiceImpl;
 import javax.servlet.ServletException;

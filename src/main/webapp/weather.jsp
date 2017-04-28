@@ -34,5 +34,12 @@
                 </c:forEach>
             </c:forEach>
         </table>
+
+        <br />
+        <!-- Кнопка сохранения данных о погоде в файл -->
+        <form method="get" action="save">
+            <input type="text" value="c:\tmp\weather.txt" name="filePath">
+            <input type="submit" value="Save to file">
+        </form>
     </body>
 </html>

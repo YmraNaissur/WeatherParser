@@ -8,6 +8,17 @@
 
     <servlet-mapping>
         <servlet-name>WeatherServlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/weather</url-pattern>
+    </servlet-mapping>
+
+    <!-- file save servlet -->
+    <servlet>
+        <servlet-name>FileSaveServlet</servlet-name>
+        <servlet-class>ru.naissur.weatherParser.web.FileSaveServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>FileSaveServlet</servlet-name>
+        <url-pattern>/save</url-pattern>
     </servlet-mapping>
 </web-app>
