@@ -54,7 +54,7 @@ public class WeatherServiceImpl implements WeatherService {
 
         String[] dates = getStringDates(document); // список дат
 
-        for (int i = 0; i < weatherTables.size(); i++) {
+        for (int i = 0; i < dates.length; i++) {
             Element weatherTable = weatherTables.get(i);
 
             List<String> realTemps = getRealTemps(weatherTable); // реальная температура

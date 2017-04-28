@@ -37,7 +37,8 @@ public class ParserUtil {
      * @return список значений погодных условий, соответствующих 4 частям дня
      */
     public static String[] getData(Element weatherTable, String selector) {
-        String[] stringData = new String[4];
+        // если парсим температуры, то нам нужно 8 элементов в массиве
+        String[] stringData = selector.equals(TEMPS) ? new String[8] : new String[4];
 
         Elements dataElements = weatherTable.select(selector);
         for (int i = 0; i < stringData.length; i++) {
@@ -53,7 +54,8 @@ public class ParserUtil {
      * @return список с датами в нужном формате
      */
     public static String[] getStringDates (Document document) {
-        String[] dates = new String[4];
+        final int NUMBER_OF_WANTED_DAYS = 7; // на какое количество дней нам нужен прогноз (для яндекса макс. 10)
+        String[] dates = new String[NUMBER_OF_WANTED_DAYS];
 
         Elements dateElements = document.select(DATES);
         for (int i = 0; i < dates.length; i++) {
