@@ -19,6 +19,8 @@ public class ParserUtil {
     private static final String DATES = "strong[class=forecast-detailed__day-number]";
     private static final String TEMPS = "div[class=weather-table__temp]";
 
+    public static final String WIND_DIRECTIONS = "abbr[class=icon-abbr]";
+    public static final String WIND_SPEEDS = "span[class=wind-speed]";
     public static final String DAYPART_NAMES = "div[class=weather-table__daypart]";
     public static final String EVENTS = "td[class=weather-table__body-cell weather-table__body-cell_type_condition]";
     public static final String PRESSURES = "td[class=weather-table__body-cell weather-table__body-cell_type_air-pressure]";
