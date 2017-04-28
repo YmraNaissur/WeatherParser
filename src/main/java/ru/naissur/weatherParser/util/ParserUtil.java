@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -36,12 +36,12 @@ public class ParserUtil {
      * @param selector строка, обозначающая, что из погодных условий мы хотим извлечь (events, pressures, humidity...)
      * @return список значений погодных условий, соответствующих 4 частям дня
      */
-    public static List<String> getData(Element weatherTable, String selector) {
-        List<String> stringData = new ArrayList<>();
+    public static String[] getData(Element weatherTable, String selector) {
+        String[] stringData = new String[4];
 
         Elements dataElements = weatherTable.select(selector);
-        for (Element dataElement : dataElements) {
-            stringData.add(dataElement.text());
+        for (int i = 0; i < stringData.length; i++) {
+            stringData[i] = dataElements.get(i).text();
         }
 
         return stringData;
@@ -52,12 +52,12 @@ public class ParserUtil {
      * @param document разобранный html, из которого необходимо достать даты
      * @return список с датами в нужном формате
      */
-    public static List<String> getStringDates (Document document) {
-        List<String> dates = new ArrayList<>();
+    public static String[] getStringDates (Document document) {
+        String[] dates = new String[4];
 
         Elements dateElements = document.select(DATES);
-        for (Element dateElement : dateElements) {
-            String date = dateElement.select("strong[class=forecast-detailed__day-number]").first().text();
+        for (int i = 0; i < dates.length; i++) {
+            String date = dateElements.get(i).select("strong[class=forecast-detailed__day-number]").first().text();
 
             // нужно отрезать от строки слова "сегодня" или "завтра"
             if (date.endsWith("сегодня")) {
@@ -66,7 +66,7 @@ public class ParserUtil {
                 date = date.substring(0, date.indexOf("завтра"));
             }
 
-            dates.add(date);
+            dates[i] = date;
         }
 
         return dates;
@@ -94,7 +94,7 @@ public class ParserUtil {
      * @return список реальных температур
      */
     public static List<String> getRealTemps(Element weatherTable) {
-        List<String> temps = getData(weatherTable, TEMPS); // список всех температур
+        List<String> temps = Arrays.asList(getData(weatherTable, TEMPS)); // список всех температур
         // в списке temps реальные температуры находятся на четных индексах
         return temps
                 .stream()
@@ -108,7 +108,7 @@ public class ParserUtil {
      * @return список ощущаемых температур
      */
     public static List<String> getFeelTemps(Element weatherTable) {
-        List<String> temps = getData(weatherTable, TEMPS); // список всех температур
+        List<String> temps = Arrays.asList(getData(weatherTable, TEMPS)); // список всех температур
         // в списке temps ощущаемые температуры находятся на нечетных индексах
         return temps
                 .stream()

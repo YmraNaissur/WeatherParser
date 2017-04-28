@@ -24,12 +24,12 @@ public class WeatherServiceImpl implements WeatherService {
     }
 
     @Override
-    public List<String> getStringDates(Document document) {
+    public String[] getStringDates(Document document) {
         return ParserUtil.getStringDates(document);
     }
 
     @Override
-    public List<String> getData(Element weatherTable, String selector) {
+    public String[] getData(Element weatherTable, String selector) {
         return ParserUtil.getData(weatherTable, selector);
     }
 
@@ -52,28 +52,28 @@ public class WeatherServiceImpl implements WeatherService {
     public List<WeatherBean> getWeatherBeans() {
         List<WeatherBean> weatherBeans = new ArrayList<>();
 
-        List<String> dates = getStringDates(document); // список дат
+        String[] dates = getStringDates(document); // список дат
 
         for (int i = 0; i < weatherTables.size(); i++) {
             Element weatherTable = weatherTables.get(i);
 
             List<String> realTemps = getRealTemps(weatherTable); // реальная температура
             List<String> feelTemps = getFeelTemps(weatherTable); // ощущаемая температура
-            List<String> names = getData(weatherTable, ParserUtil.DAYPART_NAMES); // названия частей дня
-            List<String> events = getData(weatherTable, ParserUtil.EVENTS); // погодные явления дня
-            List<String> pressures = getData(weatherTable, ParserUtil.PRESSURES); // значения давлений дня
-            List<String> humidities = getData(weatherTable, ParserUtil.HUMIDITIES); // значения влажности
-            List<String> windDirections = getData(weatherTable, ParserUtil.WIND_DIRECTIONS); // направления ветра
-            List<String> windSpeeds = getData(weatherTable, ParserUtil.WIND_SPEEDS); // скорости ветра
+            String[] names = getData(weatherTable, ParserUtil.DAYPART_NAMES); // названия частей дня
+            String[] events = getData(weatherTable, ParserUtil.EVENTS); // погодные явления дня
+            String[] pressures = getData(weatherTable, ParserUtil.PRESSURES); // значения давлений дня
+            String[] humidities = getData(weatherTable, ParserUtil.HUMIDITIES); // значения влажности
+            String[] windDirections = getData(weatherTable, ParserUtil.WIND_DIRECTIONS); // направления ветра
+            String[] windSpeeds = getData(weatherTable, ParserUtil.WIND_SPEEDS); // скорости ветра
 
             Daypart[] beanDayparts = new Daypart[4];
             for (int j = 0; j < 4; j++) {
-                beanDayparts[j] = new Daypart(names.get(j), realTemps.get(j), events.get(j), pressures.get(j), humidities.get(j),
-                        windDirections.get(j) + " " + windSpeeds.get(j), feelTemps.get(j));
+                beanDayparts[j] = new Daypart(names[j], realTemps.get(j), events[j], pressures[j], humidities[j],
+                        windDirections[j] + " " + windSpeeds[j], feelTemps.get(j));
             }
 
             // формируем объект WeatherBean и заносим его в список
-            weatherBeans.add(new WeatherBean(dates.get(i), beanDayparts));
+            weatherBeans.add(new WeatherBean(dates[i], beanDayparts));
         }
 
         return weatherBeans;

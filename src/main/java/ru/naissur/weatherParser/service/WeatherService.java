@@ -2,9 +2,7 @@ package ru.naissur.weatherParser.service;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import ru.naissur.weatherParser.domain.WeatherBean;
-
 import java.util.List;
 
 /**
@@ -12,8 +10,11 @@ import java.util.List;
  * 24.04.2017
  */
 public interface WeatherService {
-    List<String> getStringDates(Document document);
+    // Возвращаем разобранный документа
     Document getWeatherInfo();
+
+    // Возвращаем даты как строки вида "1 января"
+    String[] getStringDates(Document document);
 
     /**
      * Создаем объекты WeatherBean, соответствующие всем дням
@@ -22,7 +23,7 @@ public interface WeatherService {
     List<WeatherBean> getWeatherBeans();
 
     // возвращаем 4 значения погодных условий, соответствующие 4 частям одного дня, по селектору
-    List<String> getData(Element weatherTable, String selector);
+    String[] getData(Element weatherTable, String selector);
 
     // возвращаем список реальных температур
     List<String> getRealTemps(Element weatherTable);
