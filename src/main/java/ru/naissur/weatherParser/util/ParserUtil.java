@@ -6,9 +6,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * naissur
@@ -98,10 +98,13 @@ public class ParserUtil {
     public static List<String> getRealTemps(Element weatherTable) {
         List<String> temps = Arrays.asList(getData(weatherTable, TEMPS)); // список всех температур
         // в списке temps реальные температуры находятся на четных индексах
-        return temps
-                .stream()
-                .filter(t -> temps.indexOf(t) % 2 == 0)
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+
+        for (int i = 0; i < temps.size(); i += 2) {
+            result.add(temps.get(i));
+        }
+
+        return result;
     }
 
     /**
@@ -112,9 +115,12 @@ public class ParserUtil {
     public static List<String> getFeelTemps(Element weatherTable) {
         List<String> temps = Arrays.asList(getData(weatherTable, TEMPS)); // список всех температур
         // в списке temps ощущаемые температуры находятся на нечетных индексах
-        return temps
-                .stream()
-                .filter(t -> temps.indexOf(t) % 2 != 0)
-                .collect(Collectors.toList());
+        List<String> result = new ArrayList<>();
+
+        for (int i = 1; i < temps.size(); i += 2) {
+            result.add(temps.get(i));
+        }
+
+        return result;
     }
 }
