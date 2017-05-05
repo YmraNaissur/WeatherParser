@@ -30,4 +30,11 @@ public interface WeatherService {
 
     // возвращаем список ощущаемых температур
     List<String> getFeelTemps(Element weatherTable);
+
+    /**
+     * Сохраняем погоду в текстовый файл
+     * @param weatherBeans список объектов WeatherBean
+     * @param filePath путь к файлу, в который требуется сохранить текстовое представление погоды
+     */
+    void saveToTextFile(List<WeatherBean> weatherBeans, String filePath);
 }

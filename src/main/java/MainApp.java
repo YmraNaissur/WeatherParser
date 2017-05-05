@@ -1,23 +1,16 @@
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+import ru.naissur.weatherParser.service.WeatherService;
 import ru.naissur.weatherParser.service.WeatherServiceImpl;
-import ru.naissur.weatherParser.util.ParserUtil;
+
+import java.io.IOException;
 
 /**
  * naissur
  * 24.04.2017
  */
 public class MainApp {
-    public static void main(String[] args) {
-        /*Document document = ParserUtil.getWeatherInfo();
-        Elements weatherTables = ParserUtil.getWeaterTables(document);
-
-        for (Element table : weatherTables) {
-            System.out.println("Part of day: " + table.select("div[class=weather-table__daypart]").text());
-            System.out.println("Temperature: " + table.select("div[class=weather-table__temp]").text());
-        }*/
-
-        new WeatherServiceImpl().getWeatherBeans();
+    public static void main(String[] args) throws IOException {
+        System.out.println("Hello");
+        WeatherService weatherService = new WeatherServiceImpl();
+        System.out.println(weatherService.getWeatherBeans());
     }
 }

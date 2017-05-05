@@ -6,6 +6,9 @@ import org.jsoup.select.Elements;
 import ru.naissur.weatherParser.domain.Daypart;
 import ru.naissur.weatherParser.domain.WeatherBean;
 import ru.naissur.weatherParser.util.ParserUtil;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,6 +70,7 @@ public class WeatherServiceImpl implements WeatherService {
             String[] windSpeeds = getData(weatherTable, ParserUtil.WIND_SPEEDS); // скорости ветра
 
             Daypart[] beanDayparts = new Daypart[4];
+
             for (int j = 0; j < 4; j++) {
                 beanDayparts[j] = new Daypart(names[j], realTemps.get(j), events[j], pressures[j], humidities[j],
                         windDirections[j] + " " + windSpeeds[j], feelTemps.get(j));
@@ -77,5 +81,21 @@ public class WeatherServiceImpl implements WeatherService {
         }
 
         return weatherBeans;
+    }
+
+    @Override
+    public void saveToTextFile(List<WeatherBean> weatherBeans, String filePath) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(filePath))) {
+            for (WeatherBean weatherBean : weatherBeans) {
+                writer.println(weatherBean.getDate());
+                for (Daypart daypart: weatherBean.getDayparts()) {
+                    writer.println(daypart.getName());
+                    writer.println(daypart.getRealTemperature());
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
